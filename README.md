@@ -16,7 +16,9 @@ $ cp top_level.conf.sample top_level.conf
 
 Just run checkdomain command with domain name which you want to take.
 
+```
 $ ./checkdomain domainname
+```
 
 ## Example
 
