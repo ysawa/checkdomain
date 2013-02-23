@@ -11,43 +11,43 @@ class CheckDomain
     top_levels.delete("\r\n")
     top_levels.delete("\r")
     top_levels.delete("\n")
-		@top_levels = top_levels
-		@h = HighLine.new
-	end
+    @top_levels = top_levels
+    @h = HighLine.new
+  end
 
-	def check(name, top_level)
-	  name = name.strip
-		top_level = top_level.strip
-		domain_name = "#{name}#{top_level}"
+  def check(name, top_level)
+    name = name.strip
+    top_level = top_level.strip
+    domain_name = "#{name}#{top_level}"
     result = `whois #{domain_name}`
-		exist = true
-		not_matches = ['No match for', 'NOT FOUND', 'No match!']
-		not_matches.each do |not_match|
-		  if result.include?(not_match)
-			  exist = false
-				break
-			end
-		end
-		if exist
-		  not_good_output("#{domain_name}: already exists.")
-		else
-		  good_output("#{domain_name}: can be taken!")
-		end
-	end
-
-	def check_all(name)
-    @top_levels.each do |top_level|
-		  check(name, top_level)
+    exist = true
+    not_matches = ['No match for', 'NOT FOUND', 'No match!']
+    not_matches.each do |not_match|
+      if result.include?(not_match)
+        exist = false
+        break
+      end
     end
-	end
+    if exist
+      not_good_output("#{domain_name}: already exists.")
+    else
+      good_output("#{domain_name}: can be taken!")
+    end
+  end
 
-	def good_output(text)
-	  puts @h.color(text, :green)
-	end
+  def check_all(name)
+    @top_levels.each do |top_level|
+      check(name, top_level)
+    end
+  end
 
-	def not_good_output(text)
-	  puts @h.color(text, :red)
-	end
+  def good_output(text)
+    puts @h.color(text, :green)
+  end
+
+  def not_good_output(text)
+    puts @h.color(text, :red)
+  end
 end
 
 checker = CheckDomain.new
